@@ -1,0 +1,179 @@
+<div class="w-[90%] mx-auto py-20">
+  {% paginate collection.products by 6 %}
+    <select id="sort-by" class="py-6">
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+
+      {% for option in collection.sort_options %}
+        <option
+          value="{{ option.value }}"
+          {% if option.value == sort_by %}
+            selected="selected"
+          {% endif %}
+        >
+          {{ option.name }}
+        </option>
+      {% endfor %}
+    </select>
+    <div class="flex flex-col lg:flex-row gap-6">
+      <form class="lg:w-[30%] flex flex-col gap-4">
+        {% for filter in collection.filters %}
+          <details class="border border-gray-200 rounded p-4">
+            <summary class="cursor-pointer">
+              <div class="flex items-center justify-between">
+                <span>{{ filter.label }}</span>
+                {% if filter.active_values.size > 0 %}
+                  <span class="text-sm text-gray-500">({{ filter.active_values.size }})</span>
+                {% endif %}
+              </div>
+            </summary>
+            <div class="mt-2">
+              <div class="flex justify-between items-center mb-2">
+                <p class="text-sm">{{ filter.active_values.size }} selected</p>
+                {% if filter.active_values.size > 0 %}
+                  <p class="text-sm"><a href="{{ filter.url_to_remove }}" class="text-blue-500">Reset</a></p>
+                {% endif %}
+              </div>
+              {% case filter.type %}
+                {% when 'boolean' %}
+                  <ul>
+                    <li class="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="{{ filter.param_name }}"
+                        value="{{ filter.true_value.value }}"
+                        id="Filter-{{ filter.param_name }}-{{ filter.true_value.value }}"
+                        class="mr-2"
+                      >
+                      <label for="Filter-{{ filter.param_name }}-{{ filter.true_value.value }}">
+                        {{- filter.true_value.label -}}
+                      </label>
+                    </li>
+                    <li class="flex items-center">
+                      <input
+                        type="checkbox"
+                        name="{{ filter.param_name }}"
+                        value="{{ filter.false_value.value }}"
+                        id="Filter-{{ filter.param_name }}-{{ filter.false_value.value }}"
+                        class="mr-2"
+                      >
+                      <label for="Filter-{{ filter.param_name }}-{{ filter.false_value.value }}">
+                        {{- filter.false_value.label -}}
+                      </label>
+                    </li>
+                  </ul>
+                  <div class="mt-2">
+                    <input type="submit" value="Apply" class="py-2 px-4 bg-blue-500 text-white rounded cursor-pointer">
+                  </div>
+                {% when 'list' %}
+                  <ul>
+                    {% for filter_value in filter.values %}
+                      <li class="flex items-center">
+                        <input
+                          type="checkbox"
+                          name="{{ filter_value.param_name }}"
+                          value="{{ filter_value.value }}"
+                          id="Filter-{{ filter.param_name }}-{{ forloop.index }}"
+                          class="mr-2"
+                        >
+                        <label for="Filter-{{ filter.param_name }}-{{ forloop.index }}">{{ filter_value.label }}</label>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                  <div class="mt-2">
+                    <input type="submit" value="Apply" class="py-2 px-4 bg-blue-500 text-white rounded cursor-pointer">
+                  </div>
+                {% when 'price_range' %}
+                  <div class="flex flex-col items-center gap-4">
+                    <div class="mr-2 w-full">
+                      <input
+                        name="{{ filter.min_value.param_name }}"
+                        id="Filter-{{ filter.min_value.param_name }}"
+                        type="number"
+                        placeholder="Min"
+                        class="py-2 px-3 border border-gray-200 rounded "
+                      >
+                    </div>
+                    <div class="mr-2 w-full">
+                      <input
+                        name="{{ filter.max_value.param_name }}"
+                        id="Filter-{{ filter.max_value.param_name }}"
+                        type="number"
+                        placeholder="Max"
+                        class="py-2 px-3 border border-gray-200 rounded"
+                      >
+                    </div>
+                    <div class="mr-2 w-full">
+                      <input
+                        type="submit"
+                        value="Apply"
+                        class="py-2 px-4 bg-blue-500 text-white rounded cursor-pointer"
+                      >
+                    </div>
+                  </div>
+              {% endcase %}
+            </div>
+          </details>
+        {% endfor %}
+
+        <div class="mt-4">
+          <p><a href="{{ collection.url }}?sort_by={{ collection.sort_by }}" class="text-blue-500">Clear all</a></p>
+          {% for filter in collection.filters %}
+            {% if filter.type == 'price_range' %}
+              {% if filter.min_value.value != null or filter.max_value.value != null %}
+                <p>
+                  <a href="{{ filter.url_to_remove }}" class="text-blue-500">
+                    {{- filter.label }}: {{ filter.min_value.value | default: 0 | money }} -
+                    {{ filter.max_value.value | default: filter.range_max | money }} X</a
+                  >
+                </p>
+              {% endif %}
+            {% else %}
+              {% for filter_value in filter.active_values %}
+                <p>
+                  <a href="{{ filter_value.url_to_remove }}" class="text-blue-500">
+                    {{- filter.label }}: {{ filter_value.label }} X</a
+                  >
+                </p>
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+      </form>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:w-[70%]">
+        {% for product in collection.products %}
+          {% render 'product-items', product: product %}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="w-[90%] mx-auto flex justify-center my-8 gap-4">
+      {{ paginate | default_pagination }}
+    </div>
+  {% endpaginate %}
+</div>
+
+<script>
+  Shopify.queryParams = {};
+
+  // Preserve existing query parameters
+  if (location.search.length) {
+    var params = location.search.substr(1).split('&');
+
+    for (var i = 0; i < params.length; i++) {
+      var keyValue = params[i].split('=');
+
+      if (keyValue.length) {
+        Shopify.queryParams[decodeURIComponent(keyValue[0])] = decodeURIComponent(keyValue[1]);
+      }
+    }
+  }
+
+  // Update sort_by query parameter on select change
+  document.querySelector('#sort-by').addEventListener('change', function (e) {
+    var value = e.target.value;
+
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  });
+</script>

@@ -1,0 +1,23 @@
+<div class="w-[90%] mx-auto py-20">
+  {% form 'cart', cart %}
+    {% if cart.empty? %}
+      <p>Your shopping cart is empty.</p>
+    {% else %}
+      {% for item in cart.items -%}
+        <img src="{{ item.image | image_url: width: 100}}" width="auto" height="auto">
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.final_line_price | money }}</p>
+        <input name="updates[]" value="{{ item.quantity }}">
+        <a href="{{ item.url_to_remove }}">remove</a>
+      {%- endfor %}
+
+      <p>Total: {{ cart.total_price | money }}</p>
+      <button class="px-8 py-2 bg-yellow-600 text-white font-bold uppercase my-8" type="submit" name="update">
+        update
+      </button>
+      <button class="px-8 py-2 bg-purple-800 text-white font-bold uppercase my-8" type="submit" name="checkout">
+        checkout
+      </button>
+    {% endif %}
+  {% endform %}
+</div>

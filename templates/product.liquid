@@ -1,0 +1,49 @@
+<div class="w-[90%] mx-auto py-20">
+  <div class="flex flex-col gap-6 lg:flex-row">
+    <div class="w-full lg:w-1/2">
+      <img
+        src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
+        width="auto"
+        height="auto"
+        class="aspect-square lg:w-full lg:h-[600px] object-cover"
+      >
+    </div>
+    <div class="flex flex-col w-full gap-6 lg:w-1/2">
+      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+        <h1 class="text-4xl font-bold">{{ product.title }}</h1>
+        <div class="flex gap-2">
+          <p class="text-xl line-through">{{ product.compare_at_price | money }}</p>
+          <p class="text-xl">{{ product.price | money }}</p>
+        </div>
+      </div>
+
+      <div class="text-2xl">
+        {{ product.description }}
+      </div>
+      {% form 'product', product %}
+        <label class="product-option">Options</label>
+        <select class="product-select" name="id">
+          {% for variant in product.variants %}
+            <option
+              {% if selectedVariant.id == variant.id %}
+                selected
+              {% endif %}
+              value="{{ variant.id }}"
+            >
+              {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+
+        <div class="product-quantity">
+          <label for="quantity">Quantity</label>
+          <input name="quantity" id="quantity" value="1">
+        </div>
+
+        <button class="px-8 py-2 bg-[#c9f66f] text-black font-bold uppercase my-8" type="submit">
+          {{ 'basic.cart' | t }}
+        </button>
+      {% endform %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+<style>
+  .announcement-bar {
+    background-color: {{ section.settings.announcement_bar_color }};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    color: {{ section.settings.announcement_bar_text_color }};
+    position: relative; /* Per il posizionamento del testo */
+    overflow: hidden; /* Nasconde il testo in eccesso */
+  }
+
+  .announcement-bar__message {
+    font-size: small;
+    text-align: center;
+    flex-grow: 1;
+    transition: opacity 0.5s ease; /* Effetto fade */
+    position: absolute; /* Posizionamento assoluto per sovrapporre il testo */
+    width: 100%;
+    opacity: 0; /* Inizialmente invisibile */
+  }
+
+  .announcement-bar__message.active {
+    opacity: 1; /* Rende il testo visibile */
+  }
+
+
+  @media (max-width: 768px) {
+    .announcement-bar {
+   flex-direction: column;
+   height: 50px;
+   align-items: center;
+   padding: 20px 10px;
+  }
+  .customer-service,
+  .location {
+    display: none; /* Nasconde di default */
+  }
+
+
+    .customer-service {
+      margin-right: auto; /* Spinge il servizio clienti a sinistra */
+    }
+
+    .location {
+      margin-left: auto; /* Spinge la location a destra */
+    }
+  }
+</style>
+
+{%- if section.settings.show_announcement -%}
+  <div class="announcement-bar" style="background-color: {{ section.settings.announcement_bar_color }};">
+    <div class="customer-service">Servizio Clienti</div>
+    <p
+      class="font-medium announcement-bar__message active"
+      style="color: {{ section.settings.announcement_bar_text_color }};"
+    >
+      {{ section.settings.text | escape }}
+      <!-- Messaggio iniziale -->
+    </p>
+    <div class="location">Dove ci troviamo</div>
+  </div>
+
+  <script>
+    const messages = ['{{ section.settings.text_1 | escape }}', '{{ section.settings.text_2 | escape }}'];
+
+    let currentIndex = 0;
+    const messageElement = document.querySelector('.announcement-bar__message');
+
+    function changeMessage() {
+      messageElement.classList.remove('active'); // Rimuove la classe per far scomparire il testo
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % messages.length; // Cambia indice
+        messageElement.textContent = messages[currentIndex]; // Aggiorna il testo
+        messageElement.classList.add('active'); // Rende il testo visibile
+      }, 500); // Tempo di attesa per il fade
+    }
+
+    setInterval(changeMessage, 3000); // Cambia messaggio ogni 3 secondi
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_color",
+      "label": "Background color",
+      "default": "#3A3F4C"
+    },
+    {
+      "type": "color",
+      "id": "announcement_bar_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "First announcement message",
+      "default": "First message here"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Second announcement message",
+      "default": "Second message here"
+    }
+  ]
+}
+{% endschema %}

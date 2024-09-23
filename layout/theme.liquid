@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+    {%- endif -%}
+    <title>
+      {{ page_title }}
+      {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+    </title>
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}">
+    {% endif %}
+
+    {{ content_for_header }}
+    <style>
+      @font-face {
+        font-family: 'Qanelas Soft';
+        src: url('{{ "QanelasSoft-ExtraBold.otf" | asset_url }}') format('otf'),
+          url('{{ "QanelasSoft-Heavy.otf" | asset_url }}') format('otf');
+        font-weight: normal;
+        font-style: normal;
+      }
+
+      @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
+
+      /* Definisci come utilizzare i font */
+      p,
+      a {
+        font-family: 'Syne', sans-serif;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: 'Qanelas Soft', sans-serif;
+      }
+    </style>
+
+    {{ 'globals.css' | asset_url | stylesheet_tag }}
+    <script src="{{"https://cdn.tailwindcss.com"}}" defer></script>
+  </head>
+  <body>
+    {% section 'announcement-bar' %}
+    {% section 'header' %}
+
+    {{ content_for_layout }}
+    {% section 'footer' %}
+    <script src="{{ 'script.js' | asset_url }}" defer></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>

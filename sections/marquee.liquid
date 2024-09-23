@@ -1,0 +1,74 @@
+<section class="marquee-container">
+  <div class="marquee">
+    <div class="marquee-content">
+      <span>
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;</span
+      >
+      <span>
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;
+        {{- section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp; {{ section.settings.text }} &nbsp;</span
+      >
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Banner Marquee",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Testo del banner",
+      "default": "Spend $100 to get free shipping"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Banner",
+      "category": "Banner"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .marquee-container {
+    width: 100%;
+    overflow: hidden;
+    background-color: #3a3f4c; /* Colore di sfondo */
+    color: white; /* Colore del testo */
+    white-space: nowrap;
+    padding: 10px 0;
+  }
+
+  .marquee {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    overflow: hidden;
+  }
+
+  .marquee-content {
+    display: flex;
+    animation: scroll 50s linear infinite; /* Durata e continuità dell'animazione */
+  }
+
+  .marquee-content span {
+    display: inline-block;
+    font-size: 24px;
+    letter-spacing: 2px;
+  }
+
+  @keyframes scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+</style>

@@ -1,0 +1,119 @@
+<header class=" h-[100px] lg:h-[200px] ">
+  <div class="flex flex-col items-center justify-center h-full py-6">
+    <div class="w-[90%] mx-auto flex items-center justify-between h-full py-10">
+      <!-- Mobile menu toggle button (visible only on small screens) -->
+      <button
+        type="button"
+        class="block p-3 -m-3 text-[#3A3F4C] rounded-md lg:hidden"
+        onclick="toggleMobileMenu()"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M4 17.27v-1h16v1zm0-4.77v-1h16v1zm0-4.77v-1h16v1z"/>
+        </svg>
+      </button>
+
+      <!-- Sezione Social per il desktop -->
+      <div class="items-center hidden lg:flex">
+        <div class="flex gap-4 mt-2">
+          <a href="{{ settings.social_facebook_link }}" target="_blank" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+              <path fill="none" stroke="#3A3F4C" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 2h-3a5 5 0 0 0-5 5v3H6v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+          </a>
+          <a href="{{ settings.social_instagram_link }}" target="_blank" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+              <path fill="#3A3F4C" d="M12.001 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0-2a5 5 0 1 1 0 10a5 5 0 0 1 0-10m6.5-.25a1.25 1.25 0 0 1-2.5 0a1.25 1.25 0 0 1 2.5 0M12.001 4c-2.474 0-2.878.007-4.029.058c-.784.037-1.31.142-1.798.332a2.9 2.9 0 0 0-1.08.703a2.9 2.9 0 0 0-.704 1.08c-.19.49-.295 1.015-.331 1.798C4.007 9.075 4 9.461 4 12c0 2.475.007 2.878.058 4.029c.037.783.142 1.31.331 1.797c.17.435.37.748.702 1.08c.337.336.65.537 1.08.703c.494.191 1.02.297 1.8.333C9.075 19.994 9.461 20 12 20c2.475 0 2.878-.007 4.029-.058c.782-.037 1.308-.142 1.797-.331a2.9 2.9 0 0 0 1.08-.703c.337-.336.538-.649.704-1.08c.19-.492.296-1.018.332-1.8c.052-1.103.058-1.49.058-4.028c0-2.474-.007-2.878-.058-4.029c-.037-.782-.143-1.31-.332-1.798a2.9 2.9 0 0 0-.703-1.08a2.9 2.9 0 0 0-1.08-.704c-.49-.19-1.016-.295-1.798-.331C14.926 4.006 14.54 4 12 4m0-2c2.717 0 3.056.01 4.123.06c1.064.05 1.79.217 2.427.465c.66.254 1.216.598 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428c.047 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122s-.218 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772a4.9 4.9 0 0 1-1.772 1.153c-.637.247-1.363.415-2.427.465c-1.067.047-1.406.06-4.123.06s-3.056-.01-4.123-.06c-1.064-.05-1.789-.218-2.427-.465a4.9 4.9 0 0 1-1.772-1.153a4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.012 15.056 2 14.717 2 12s.01-3.056.06-4.122s.217-1.79.465-2.428a4.9 4.9 0 0 1 1.153-1.772A4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.362-.415 2.427-.465C8.945 2.013 9.284 2 12.001 2"/>
+            </svg>
+          </a>
+          <!-- Aggiungi altri social se necessario -->
+        </div>
+      </div>
+
+      <!-- Il logo e il menu principale continuano come prima -->
+      <a href="{{ shop.url }}" title="{{ shop.name }}">
+        <img
+          src="{{ settings.logo | image_url }}"
+          alt="{{ shop.name }} logo"
+          width="auto"
+          height="auto"
+          class="w-[60px] h-[60px] lg:h-[100px] lg:w-[100px]"
+        >
+      </a>
+
+      <div class="flex items-center gap-4">
+        <div class="search-icon" onclick="toggleSearch()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 32 32">
+            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m5 27l7.5-7.5M28 13a9 9 0 1 1-18 0a9 9 0 0 1 18 0"/>
+          </svg>
+        </div>
+        <!-- Icona carrello -->
+        <a href="/cart" class="flex items-center gap-1 py-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
+            <path fill="#3A3F4C" d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1m-9-1a2 2 0 0 1 4 0v1h-4Zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2Z"/>
+          </svg>
+          {% if cart.item_count > 0 %}
+            <span class="ml-1">({{ cart.item_count }})</span>
+          {% endif %}
+        </a>
+      </div>
+    </div>
+
+    <!-- Menu principale visibile solo in desktop -->
+    <div class="justify-center hidden w-full gap-10 text-[14px] lg:flex ">
+      {% for link in linklists['main-menu'].links %}
+        <a href="{{ link.url }}" class="block py-2 font-bold text-[#3A3F4C] uppercase">{{ link.title }}</a>
+      {% endfor %}
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu, displayed when mobile menu icon is clicked (visible only on small screens) -->
+<nav id="mobile-menu" class="hidden h-screen text-white bg-white lg:hidden">
+  <div class="p-4">
+    {% for link in linklists['main-menu'].links %}
+      <a href="{{ link.url }}" class="block py-2 text-[#3A3F4C]">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+
+  <!-- Sezione Social Media per il mobile -->
+  <div class="p-4 mt-4 border-t border-gray-200">
+    <h3 class="font-medium text-[#3A3F4C]">Seguici sui social</h3>
+    <div class="flex gap-4 mt-2">
+      <a href="{{ settings.social_facebook_link }}" target="_blank" aria-label="Facebook">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+          <path fill="none" stroke="#3A3F4C" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 2h-3a5 5 0 0 0-5 5v3H6v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </a>
+      <a href="{{ settings.social_instagram_link }}" target="_blank" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" viewBox="0 0 24 24">
+          <path fill="#3A3F4C" d="M12.001 9a3 3 0 1 0 0 6a3 3 0 0 0 0-6m0-2a5 5 0 1 1 0 10a5 5 0 0 1 0-10m6.5-.25a1.25 1.25 0 0 1-2.5 0a1.25 1.25 0 0 1 2.5 0M12.001 4c-2.474 0-2.878.007-4.029.058c-.784.037-1.31.142-1.798.332a2.9 2.9 0 0 0-1.08.703a2.9 2.9 0 0 0-.704 1.08c-.19.49-.295 1.015-.331 1.798C4.007 9.075 4 9.461 4 12c0 2.475.007 2.878.058 4.029c.037.783.142 1.31.331 1.797c.17.435.37.748.702 1.08c.337.336.65.537 1.08.703c.494.191 1.02.297 1.8.333C9.075 19.994 9.461 20 12 20c2.475 0 2.878-.007 4.029-.058c.782-.037 1.308-.142 1.797-.331a2.9 2.9 0 0 0 1.08-.703c.337-.336.538-.649.704-1.08c.19-.492.296-1.018.332-1.8c.052-1.103.058-1.49.058-4.028c0-2.474-.007-2.878-.058-4.029c-.037-.782-.143-1.31-.332-1.798a2.9 2.9 0 0 0-.703-1.08a2.9 2.9 0 0 0-1.08-.704c-.49-.19-1.016-.295-1.798-.331C14.926 4.006 14.54 4 12 4m0-2c2.717 0 3.056.01 4.123.06c1.064.05 1.79.217 2.427.465c.66.254 1.216.598 1.772 1.153a4.9 4.9 0 0 1 1.153 1.772c.247.637.415 1.363.465 2.428c.047 1.066.06 1.405.06 4.122s-.01 3.056-.06 4.122s-.218 1.79-.465 2.428a4.9 4.9 0 0 1-1.153 1.772a4.9 4.9 0 0 1-1.772 1.153c-.637.247-1.363.415-2.427.465c-1.067.047-1.406.06-4.123.06s-3.056-.01-4.123-.06c-1.064-.05-1.789-.218-2.427-.465a4.9 4.9 0 0 1-1.772-1.153a4.9 4.9 0 0 1-1.153-1.772c-.248-.637-.415-1.363-.465-2.428C2.012 15.056 2 14.717 2 12s.01-3.056.06-4.122s.217-1.79.465-2.428a4.9 4.9 0 0 1 1.153-1.772A4.9 4.9 0 0 1 5.45 2.525c.637-.248 1.362-.415 2.427-.465C8.945 2.013 9.284 2 12.001 2"/>
+        </svg>
+      </a>
+      <!-- Aggiungi altri social se necessario -->
+    </div>
+  </div>
+</nav>
+
+<script>
+  function toggleSearch() {
+    var searchForm = document.getElementById('search-form');
+    if (searchForm.classList.contains('hidden')) {
+      searchForm.classList.remove('hidden');
+    } else {
+      searchForm.classList.add('hidden');
+    }
+  }
+
+  // Nascondi il form di ricerca quando si fa clic al di fuori di esso
+  document.addEventListener('click', function (event) {
+    var searchIcon = document.querySelector('.search-icon');
+    var searchForm = document.getElementById('search-form');
+    if (!searchIcon.contains(event.target) && !searchForm.contains(event.target)) {
+      searchForm.classList.add('hidden');
+    }
+  });
+  function toggleMobileMenu() {
+    var mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.toggle('hidden');
+  }
+</script>

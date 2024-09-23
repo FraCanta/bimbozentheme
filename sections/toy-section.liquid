@@ -1,0 +1,162 @@
+<div class="py-20">
+  <div class="w-[90%] mx-auto text-center py-20">
+    <h2 class="text-5xl text-[#3A3F4C]">Toys for kids of any age</h2>
+  </div>
+  <section class="grid grid-cols-2">
+    <!-- Circles and Texts -->
+    <div class="flex flex-col gap-20 w-[90%] mx-auto py-10 relative">
+      <div class="absolute top-0 bottom-0 w-1 bg-gray-300 timeline-line left-3"></div>
+      <div class="flex gap-6 timeline-step" id="babies">
+        <div class="timeline-circle w-6 h-6 bg-[#3A3F4C] rounded-full"></div>
+        <div class="flex flex-col w-2/3 gap-4">
+          <p class="text-[#3A3F4C]">0–1 years</p>
+          <h3 class="text-[#3A3F4C] text-2xl font-bold">For the babies.</h3>
+          <p class="text-[#3A3F4C]/80">
+            We believe that every little one deserves to be wrapped in love and style from the very beginning.
+          </p>
+          <a href="https://example.com" class="btn">Shop baby</a>
+        </div>
+      </div>
+      <div class="flex gap-6 timeline-step" id="toddlers">
+        <div class="timeline-circle w-6 h-6 bg-[#3A3F4C] rounded-full"></div>
+        <div class="flex flex-col w-2/3 gap-4">
+          <p class="text-[#3A3F4C]">1–4 years</p>
+          <h3 class="text-[#3A3F4C] text-2xl font-bold">For the toddlers.</h3>
+          <p class="text-[#3A3F4C]/80">
+            We understand that toddlers are tiny explorers. Our toddler clothes combine style and durability.
+          </p>
+          <a href="https://example.com" class="btn">Shop toddlers</a>
+        </div>
+      </div>
+      <div class="flex gap-6 timeline-step" id="big-kids">
+        <div class="timeline-circle w-6 h-6 bg-[#3A3F4C] rounded-full"></div>
+        <div class="flex flex-col w-2/3 gap-4">
+          <p class="text-[#3A3F4C]">4+ years</p>
+          <h3 class="text-[#3A3F4C] text-2xl font-bold">For the big kids.</h3>
+          <p class="text-[#3A3F4C]/80">
+            Our collection is tailored to embrace their individuality and evolving tastes.
+          </p>
+          <a href="https://example.com" class="btn">Shop big kids</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Images -->
+    <div class="relative w-full h-full age-image aspect-square">
+      <img
+        src="{{ 'img-babies.webp' | asset_url }}"
+        id="babies-img"
+        alt="Babies"
+        class="object-cover timeline-img active"
+        width="auto"
+        height="auto"
+      >
+      <img
+        src="{{ 'img-toddlers.webp' | asset_url }}"
+        id="toddlers-img"
+        alt="Toddlers"
+        class="hidden object-cover timeline-img"
+        width="auto"
+        height="auto"
+      >
+      <img
+        src="{{ 'img-big-kids.webp' | asset_url }}"
+        id="big-kids-img"
+        alt="Big Kids"
+        class="hidden object-cover timeline-img"
+        width="auto"
+        height="auto"
+      >
+    </div>
+  </section>
+</div>
+
+<script>
+  // Seleziona tutte le sezioni e immagini
+  const sections = document.querySelectorAll('.timeline-step');
+
+  // Seleziona tutte le immagini corrispondenti
+  const images = {
+    babies: document.getElementById('babies-img'),
+    toddlers: document.getElementById('toddlers-img'),
+    'big-kids': document.getElementById('big-kids-img'),
+  };
+
+  // Funzione per rimuovere la classe 'active' da tutte le immagini e sezioni
+  function resetImagesAndSections() {
+    Object.values(images).forEach((img) => img.classList.remove('active'));
+    sections.forEach((section) => section.classList.remove('active'));
+  }
+
+  // Configurazione dell'Intersection Observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Resetta tutte le immagini e le sezioni
+          resetImagesAndSections();
+
+          // Aggiunge la classe 'active' alla sezione e all'immagine corrispondente
+          const id = entry.target.id;
+          images[id].classList.add('active');
+          entry.target.classList.add('active');
+        }
+      });
+    },
+    {
+      threshold: 1, // L'elemento è visibile quando è al 50% nel viewport
+    }
+  );
+
+  // Osserva ciascuna sezione
+  sections.forEach((section) => observer.observe(section));
+</script>
+
+<style>
+  /* Timeline and circles */
+  .timeline-line {
+    z-index: 0;
+  }
+  .timeline-circle {
+    z-index: 1;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Text opacity */
+  .timeline-step p,
+  .timeline-step h3,
+  .timeline-step a {
+    transition: opacity 0.3s ease;
+  }
+  .timeline-step.active p,
+  .timeline-step.active h3,
+  .timeline-step.active a {
+    opacity: 1;
+  }
+  .timeline-step p,
+  .timeline-step h3,
+  .timeline-step a {
+    opacity: 0.4;
+  }
+
+  /* Images */
+  .timeline-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+  }
+  .timeline-img.active {
+    opacity: 1;
+    z-index: 1;
+  }
+
+  /* Active state for timeline step */
+  .timeline-step.active .timeline-circle {
+    background-color: #e8cc56;
+  }
+</style>

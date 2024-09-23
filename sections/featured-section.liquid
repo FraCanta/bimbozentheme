@@ -1,0 +1,55 @@
+{% schema %}
+{
+  "name": "Featured Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Immagine principale"
+    },
+    {
+      "type": "product_list",
+      "id": "product_selection",
+      "label": "Selezione Prodotti",
+      "limit": 4
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Colore di Sfondo",
+      "default": "#E7CB56"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sezione con prodotti in evidenza",
+      "category": "Homepage"
+    }
+  ]
+}
+{% endschema %}
+
+<section
+  class="grid grid-cols-1 lg:grid-cols-2"
+  style="background-color: rgba(231, 203, 86, 0.18)  "
+>
+  <div class="featured-content">
+    <!-- Colonna Immagine -->
+    <div class="image-column">
+      <img
+        src="{{ 'media.jpg' | asset_url }}"
+        alt="Hero Image 1"
+        class="object-cover object-top w-full h-full"
+        width="auto"
+        height="auto"
+      >
+    </div>
+
+    <!-- Colonna Prodotti -->
+  </div>
+  <div class="grid grid-cols-1 gap-6 p-8 lg:grid-cols-2">
+    {% for product in collections.babywearing.products limit: 4 %}
+      {% render 'product-items', product: product %}
+    {% endfor %}
+  </div>
+</section>
