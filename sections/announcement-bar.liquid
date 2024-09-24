@@ -1,11 +1,9 @@
 <style>
   .announcement-bar {
-    background-color: {{ section.settings.announcement_bar_color }};
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    color: {{ section.settings.announcement_bar_text_color }};
     position: relative; /* Per il posizionamento del testo */
     overflow: hidden; /* Nasconde il testo in eccesso */
   }
@@ -24,19 +22,17 @@
     opacity: 1; /* Rende il testo visibile */
   }
 
-
   @media (max-width: 768px) {
     .announcement-bar {
-   flex-direction: column;
-   height: 50px;
-   align-items: center;
-   padding: 20px 10px;
-  }
-  .customer-service,
-  .location {
-    display: none; /* Nasconde di default */
-  }
-
+      flex-direction: column;
+      height: 50px;
+      align-items: center;
+      padding: 20px 10px;
+    }
+    .customer-service,
+    .location {
+      display: none; /* Nasconde di default */
+    }
 
     .customer-service {
       margin-right: auto; /* Spinge il servizio clienti a sinistra */
@@ -59,7 +55,7 @@
 </div>
 
 <script>
-  const messages = ['{{ section.settings.text_1 | escape }}', '{{ section.settings.text_2 | escape }}'];
+  const messages = ['Messaggio uno', 'Messaggio due'];
 
   let currentIndex = 0;
   const messageElement = document.querySelector('.announcement-bar__message');
