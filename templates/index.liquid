@@ -26,13 +26,13 @@
 </script>
 
 <div class="w-[90%] mx-auto py-20 flex flex-col gap-10">
-  <h2 class="text-center text-[#3A3F4C] font-light text-5xl">Shop by category</h2>
-  <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
+  <h2 class="text-center text-[#3A3F4C] font-light text-3xl lg:text-5xl">Shop by category</h2>
+  <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
     {% assign count = 0 %}
     {% for collection in collections %}
       {% unless collection.handle == 'home' %}
         <div
-          class="flex items-center justify-center w-full h-full text-3xl text-white rounded-full aspect-square"
+          class="flex items-center justify-center h-full text-xl rounded-full lg:w-2/3 text-main lg:text-3xl aspect-square"
           style="background-color: {{ colors[count]}}; opacity: 0.8"
         >
           {{- collection.title | link_to: collection.url }}
@@ -47,7 +47,7 @@
 </div>
 <div
   data-aos="fade-up"
-  class="text-3xl lg:text-8xl w-[90%] lg:w-full mx-auto text-center min-h-[20vh] lg:min-h-[40vh] flex items-center justify-center text-[#3A3F4C]"
+  class="text-5xl lg:text-8xl w-[90%] lg:w-full mx-auto text-center min-h-[20vh] lg:min-h-[40vh] flex items-center justify-center text-[#3A3F4C]"
 >
   <h2 class="w-full lg:w-full">At Bimbo Zen, we're inspired by adventure.</h2>
 </div>
@@ -55,8 +55,8 @@
 <div class="w-[90%] mx-auto py-20 flex flex-col gap-10" data-aos="fade-up">
   <div class="flex flex-wrap items-center justify-between w-full gap-y-6">
     <div class="flex flex-col gap-4">
-      <h2 class="text-5xl font-medium text-[#3A3F4C]">I nostri prodotti</h2>
-      <p class="text-xl font-light text-[#3A3F4C]/80">
+      <h2 class="text-4xl lg:text-5xl font-medium text-[#3A3F4C]">I nostri prodotti</h2>
+      <p class="text-lg lg:text-xl font-light text-[#3A3F4C]/80">
         Our most popular styles right now that your little one will love.
       </p>
     </div>

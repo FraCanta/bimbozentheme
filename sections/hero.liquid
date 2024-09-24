@@ -12,7 +12,7 @@
       <!-- Overlay -->
       <div class="absolute inset-0 flex items-center justify-center text-2xl text-white">
         <!-- Testo -->
-        <div class="flex flex-col items-center lg:justify-center gap-4 w-[90%] ">
+        <div class="flex flex-col items-center lg:justify-center text-center gap-4 w-[90%] ">
           <h1 class="text-6xl text-white lg:text-8xl">Stay Cozy</h1>
           <p>Comfy styles have just arrived</p>
           {% render 'button', url: 'collections_url', label: 'Tutti i prodotti' %}
@@ -31,7 +31,7 @@
       <!-- Overlay -->
       <div class="absolute inset-0 flex items-center justify-center text-2xl text-white ">
         <!-- Testo -->
-        <div class="flex flex-col items-center lg:justify-center gap-4 w-[90%] ">
+        <div class="flex flex-col items-center lg:justify-center text-center gap-4 w-[90%] ">
           <h1 class="text-6xl text-white lg:text-8xl">Stay Cozy</h1>
           <p>Comfy styles have just arrived</p>
           {% render 'button', url: 'collections_url', label: 'Tutti i prodotti' %}
@@ -65,5 +65,11 @@
   .swiper-pagination-bullet-active {
     background: white !important; /* Colore di sfondo attivo */
     border: none; /* Rimuovi il bordo per il dot attivo */
+  }
+
+  @media screen and (max-width: 768px) {
+    .swiper-pagination {
+      bottom: 0px !important; /* Distanza dalla fine dell'immagine */
+    }
   }
 </style>
