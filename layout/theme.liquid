@@ -6,9 +6,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
 
-    {%- if settings.favicon != blank -%}
-      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
-    {%- endif -%}
+
+      <link rel="icon" type="image/png" href="{{ 'favicon.ico' | asset_url }}">
     <title>
       {{ page_title }}
       {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -18,6 +17,8 @@
     {% endif %}
 
     {{ content_for_header }}
+        <link rel="stylesheet" href="{{'tailwind.css' | asset_url}}">
+
     <style>
       @font-face {
         font-family: 'Qanelas Soft';
@@ -46,7 +47,6 @@
     </style>
 
     {{ 'globals.css' | asset_url | stylesheet_tag }}
-    <script src="{{"https://cdn.tailwindcss.com"}}" defer></script>
   </head>
   <body>
     {% section 'announcement-bar' %}
