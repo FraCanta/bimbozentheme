@@ -48,72 +48,30 @@
   }
 </style>
 
-{%- if section.settings.show_announcement -%}
-  <div class="announcement-bar" style="background-color: {{ section.settings.announcement_bar_color }};">
-    <div class="customer-service">Servizio Clienti</div>
-    <p
-      class="font-medium announcement-bar__message active"
-      style="color: {{ section.settings.announcement_bar_text_color }};"
-    >
-      {{ section.settings.text | escape }}
-      <!-- Messaggio iniziale -->
-    </p>
-    <div class="location">Dove ci troviamo</div>
-  </div>
+<div class="announcement-bar bg-main">
+  <div class="customer-service">Servizio Clienti</div>
+  <p
+    class="font-medium text-white announcement-bar__message active"
+  >
+    Annuncio
+  </p>
+  <div class="location">Dove ci troviamo</div>
+</div>
 
-  <script>
-    const messages = ['{{ section.settings.text_1 | escape }}', '{{ section.settings.text_2 | escape }}'];
+<script>
+  const messages = ['{{ section.settings.text_1 | escape }}', '{{ section.settings.text_2 | escape }}'];
 
-    let currentIndex = 0;
-    const messageElement = document.querySelector('.announcement-bar__message');
+  let currentIndex = 0;
+  const messageElement = document.querySelector('.announcement-bar__message');
 
-    function changeMessage() {
-      messageElement.classList.remove('active'); // Rimuove la classe per far scomparire il testo
-      setTimeout(() => {
-        currentIndex = (currentIndex + 1) % messages.length; // Cambia indice
-        messageElement.textContent = messages[currentIndex]; // Aggiorna il testo
-        messageElement.classList.add('active'); // Rende il testo visibile
-      }, 500); // Tempo di attesa per il fade
-    }
+  function changeMessage() {
+    messageElement.classList.remove('active'); // Rimuove la classe per far scomparire il testo
+    setTimeout(() => {
+      currentIndex = (currentIndex + 1) % messages.length; // Cambia indice
+      messageElement.textContent = messages[currentIndex]; // Aggiorna il testo
+      messageElement.classList.add('active'); // Rende il testo visibile
+    }, 500); // Tempo di attesa per il fade
+  }
 
-    setInterval(changeMessage, 3000); // Cambia messaggio ogni 3 secondi
-  </script>
-{%- endif -%}
-
-{% schema %}
-{
-  "name": "Announcement bar",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_announcement",
-      "label": "Show announcement",
-      "default": false
-    },
-    {
-      "type": "color",
-      "id": "announcement_bar_color",
-      "label": "Background color",
-      "default": "#3A3F4C"
-    },
-    {
-      "type": "color",
-      "id": "announcement_bar_text_color",
-      "label": "Text color",
-      "default": "#ffffff"
-    },
-    {
-      "type": "text",
-      "id": "text_1",
-      "label": "First announcement message",
-      "default": "First message here"
-    },
-    {
-      "type": "text",
-      "id": "text_2",
-      "label": "Second announcement message",
-      "default": "Second message here"
-    }
-  ]
-}
-{% endschema %}
+  setInterval(changeMessage, 3000); // Cambia messaggio ogni 3 secondi
+</script>
