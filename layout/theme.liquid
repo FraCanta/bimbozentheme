@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="">
 
-
-      <link rel="icon" type="image/png" href="{{ 'favicon.ico' | asset_url }}">
+    <link rel="icon" type="image/png" href="{{ 'favicon.ico' | asset_url }}">
     <title>
       {{ page_title }}
       {% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
@@ -17,7 +16,7 @@
     {% endif %}
 
     {{ content_for_header }}
-        <link rel="stylesheet" href="{{'tailwind.css' | asset_url}}">
+    <link rel="stylesheet" href="{{'tailwind.css' | asset_url}}">
 
     <style>
       @font-face {
