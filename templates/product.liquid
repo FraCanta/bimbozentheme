@@ -1,25 +1,45 @@
 <div class="w-[90%] mx-auto py-20">
   <div class="flex flex-col gap-6 lg:flex-row">
+    <!-- Main Image -->
     <div class="w-full lg:w-1/2">
       <img
+        id="main-product-image"
         src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
         width="auto"
         height="auto"
         class="aspect-square lg:w-full lg:h-[600px] object-cover"
+        alt="Main Product Image"
       >
+      <!-- Thumbnails -->
+      <div class="flex gap-4 mt-4">
+        {% for image in product.images %}
+          <img
+            src="{{ image | image_url }}"
+            data-src="{{ image | image_url }}"
+            class="object-cover w-16 h-16 cursor-pointer thumbnail-image"
+            alt="Product Thumbnail"
+            width="100px"
+            height="100px"
+          >
+        {% endfor %}
+      </div>
     </div>
+
+    <!-- Product Details -->
     <div class="flex flex-col w-full gap-6 lg:w-1/2">
       <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
-        <h1 class="text-4xl font-bold">{{ product.title }}</h1>
+        <h1 class="text-2xl font-bold">{{ product.title }}</h1>
         <div class="flex gap-2">
           <p class="text-xl line-through">{{ product.compare_at_price | money }}</p>
           <p class="text-xl">{{ product.price | money }}</p>
         </div>
       </div>
 
-      <div class="text-2xl">
-        {{ product.description }}
+      <div>
+        <p class="text-lg font-regular">{{ product.description }}</p>
       </div>
+
+      <!-- Product Form -->
       {% form 'product', product %}
         <label class="product-option">Options</label>
         <select class="product-select" name="id">
@@ -40,10 +60,43 @@
           <input name="quantity" id="quantity" value="1">
         </div>
 
-        <button class="px-8 py-2 bg-[#c9f66f] text-black font-bold uppercase my-8" type="submit">
+        <button
+          class="py-4 px-6 rounded-[30px] transition duration-200 bg-main uppercase text-white max-w-max text-base "
+          type="submit"
+        >
           {{ 'basic.cart' | t }}
         </button>
       {% endform %}
     </div>
   </div>
 </div>
+
+<style>
+  .thumbnail-selected {
+    border: 2px solid #3490dc; /* Aggiunge un bordo blu. Modifica il colore secondo le tue preferenze */
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Seleziona tutte le immagini in miniatura
+    const thumbnails = document.querySelectorAll('.thumbnail-image');
+    const mainImage = document.getElementById('main-product-image');
+
+    thumbnails.forEach((thumbnail) => {
+      thumbnail.addEventListener('click', function () {
+        // Aggiorna l'immagine principale
+        const newSrc = this.getAttribute('data-src') + '?' + new Date().getTime();
+        mainImage.src = newSrc;
+
+        // Rimuovi la classe 'thumbnail-selected' da tutte le miniature
+        thumbnails.forEach((thumb) => {
+          thumb.classList.remove('thumbnail-selected');
+        });
+
+        // Aggiungi la classe 'thumbnail-selected' alla miniatura cliccata
+        this.classList.add('thumbnail-selected');
+      });
+    });
+  });
+</script>

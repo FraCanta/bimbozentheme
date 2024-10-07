@@ -4,7 +4,7 @@
       <p>Your shopping cart is empty.</p>
     {% else %}
       {% for item in cart.items -%}
-        {% comment %} <img src="{{ item.image | image_url: width: 100}}" width="auto" height="auto"> {% endcomment %}
+        <img src="{{ item.image | image_url: width: 300}}" width="300px" height="300px">
         <h2>{{ item.title }}</h2>
         <p>{{ item.final_line_price | money }}</p>
         <input name="updates[]" value="{{ item.quantity }}">
