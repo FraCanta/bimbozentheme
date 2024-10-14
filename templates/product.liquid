@@ -5,9 +5,9 @@
       <img
         id="main-product-image"
         src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
-        width="auto"
-        height="auto"
-        class="aspect-square lg:w-full lg:h-[600px] object-cover"
+        width="200px"
+        height="200px"
+        class="object-cover h-20 aspect-square lg:w-full"
         alt="Main Product Image"
       >
       <!-- Thumbnails -->
