@@ -1,17 +1,9 @@
 <div class="w-[90%] mx-auto py-20">
-  <div class="flex flex-col gap-6 lg:flex-row">
+  <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
     <!-- Main Image -->
-    <div class="w-full lg:w-1/2">
-      <img
-        id="main-product-image"
-        src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
-        width="200px"
-        height="200px"
-        class="object-cover h-20 aspect-square lg:w-full"
-        alt="Main Product Image"
-      >
-      <!-- Thumbnails -->
-      <div class="flex gap-4 mt-4">
+    <div class="flex w-full gap-4">
+      <!-- Thumbnail images container -->
+      <div class="flex flex-col gap-4">
         {% for image in product.images %}
           <img
             src="{{ image | image_url }}"
@@ -23,20 +15,28 @@
           >
         {% endfor %}
       </div>
+
+      <!-- Main product image -->
+      <div class="w-full">
+        <img
+          id="main-product-image"
+          src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
+          class="object-cover w-full h-full border border-main/20 aspect-square"
+          width="300px"
+          height="300px"
+          alt="Main Product Image"
+        >
+      </div>
     </div>
 
     <!-- Product Details -->
-    <div class="flex flex-col w-full gap-6 lg:w-1/2">
-      <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+    <div class="flex flex-col w-full gap-6 ">
+      <div class="flex flex-col gap-4">
         <h1 class="text-2xl font-bold">{{ product.title }}</h1>
         <div class="flex gap-2">
           <p class="text-xl line-through">{{ product.compare_at_price | money }}</p>
           <p class="text-xl">{{ product.price | money }}</p>
         </div>
-      </div>
-
-      <div>
-        <p class="text-lg font-regular">{{ product.description }}</p>
       </div>
 
       <!-- Product Form -->
@@ -56,24 +56,81 @@
         </select>
 
         <div class="product-quantity">
-          <label for="quantity">Quantity</label>
-          <input name="quantity" id="quantity" value="1">
-        </div>
+          <label for="quantity" class="block mb-2">Quantity</label>
 
-        <button
-          class="py-4 px-6 rounded-[30px] transition duration-200 bg-main uppercase text-white max-w-max text-base "
-          type="submit"
-        >
-          {{ 'basic.cart' | t }}
-        </button>
+          <div class="flex items-center gap-4">
+            <!-- Decrement Button -->
+            <button
+              type="button"
+              class="px-4 py-2 bg-gray-300 rounded"
+              id="decrement-btn"
+            >
+              -
+            </button>
+
+            <!-- Display Quantity -->
+            <span id="quantity-display" class="text-lg font-bold">1</span>
+
+            <!-- Increment Button -->
+            <button
+              type="button"
+              class="px-4 py-2 bg-gray-300 rounded"
+              id="increment-btn"
+            >
+              +
+            </button>
+            <button
+              class="py-4 px-6 rounded-[30px] transition duration-200 bg-main uppercase text-white w-full text-base mt-10"
+              type="submit"
+            >
+              {{ 'basic.cart' | t }}
+            </button>
+          </div>
+
+          <!-- Hidden Input to Submit Quantity -->
+          <input type="hidden" name="quantity" id="quantity-input" value="1">
+        </div>
       {% endform %}
     </div>
+  </div>
+
+  <script>
+    const quantityDisplay = document.getElementById('quantity-display');
+    const quantityInput = document.getElementById('quantity-input');
+    const incrementBtn = document.getElementById('increment-btn');
+    const decrementBtn = document.getElementById('decrement-btn');
+
+    let quantity = 1;
+
+    // Increment quantity
+    incrementBtn.addEventListener('click', () => {
+      quantity++;
+      quantityDisplay.textContent = quantity;
+      quantityInput.value = quantity;
+    });
+
+    // Decrement quantity, but don't go below 1
+    decrementBtn.addEventListener('click', () => {
+      if (quantity > 1) {
+        quantity--;
+        quantityDisplay.textContent = quantity;
+        quantityInput.value = quantity;
+      }
+    });
+  </script>
+  <div class="grid w-full grid-cols-1 gap-10 py-20 lg:grid-cols-3">
+    <div class="flex flex-col gap-2">
+      <h2 class="text-xl font-bold text-main">Descrizione</h2>
+      <p class="text-lg font-light">{{ product.description }}</p>
+    </div>
+    <p class="text-lg font-light">ciao</p>
+    <p class="text-lg font-light">ciaone</p>
   </div>
 </div>
 
 <style>
   .thumbnail-selected {
-    border: 2px solid #3490dc; /* Aggiunge un bordo blu. Modifica il colore secondo le tue preferenze */
+    border: 2px solid #3a3f4c86; /* Aggiunge un bordo blu. Modifica il colore secondo le tue preferenze */
   }
 </style>
 
