@@ -4,7 +4,7 @@
       <!-- Mobile menu toggle button (visible only on small screens) -->
       <button
         type="button"
-        class="block p-3 -m-3 text-main rounded-md lg:hidden"
+        class="block p-3 -m-3 rounded-md text-main lg:hidden"
         onclick="toggleMobileMenu()"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
@@ -31,13 +31,13 @@
 
       <!-- Il logo e il menu principale continuano come prima -->
       <a href="{{ shop.url }}" title="{{ shop.name }}">
-      <img
+        <img
           src="{{ "logo.png" | asset_url }}"
           alt="{{ shop.name }} logo"
           width="auto"
           height="auto"
           class="w-[60px] h-[60px] lg:h-[100px] lg:w-[100px]"
-        /> 
+        >
       </a>
 
       <div class="flex items-center gap-4">
@@ -59,7 +59,7 @@
     </div>
 
     <!-- Menu principale visibile solo in desktop -->
-    <div class="justify-center hidden w-full gap-10 text-[14px] lg:flex ">
+    <div class="justify-center hidden w-full gap-20 text-[16px] lg:flex ">
       {% for link in linklists['main-menu'].links %}
         <a href="{{ link.url }}" class="block py-2 font-bold text-[#3A3F4C] uppercase">{{ link.title }}</a>
       {% endfor %}

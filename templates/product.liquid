@@ -20,7 +20,9 @@
       <div class="w-full">
         <img
           id="main-product-image"
-          src="{% if product.featured_image %}{{ product.featured_image | image_url }}{% else %}{{ 'placeholder.jpg' | asset_url }}{% endif %}"
+          src="{{ product.featured_image | image_url }}"
+          data-src="{{ product.featured_image | image_url }}"
+
           class="object-cover w-full h-full border border-main/20 aspect-square"
           width="300px"
           height="300px"
@@ -41,46 +43,38 @@
 
       <!-- Product Form -->
       {% form 'product', product %}
-        <label class="product-option">Options</label>
-        <select class="product-select" name="id">
-          {% for variant in product.variants %}
-            <option
-              {% if selectedVariant.id == variant.id %}
-                selected
-              {% endif %}
-              value="{{ variant.id }}"
-            >
-              {{ variant.title }}
-            </option>
-          {% endfor %}
-        </select>
+        <!-- Accesso al Metafield materiale -->
+
+        <p>Materiale: {{ product.metafields.custom.materiale.value }}</p>
+
+        <!-- Accesso al Metafield fascia di età -->
 
         <div class="product-quantity">
-          <label for="quantity" class="block mb-2">Quantity</label>
+          <label for="quantity" class="block mb-2">Quantità</label>
 
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-10">
             <!-- Decrement Button -->
             <button
               type="button"
-              class="px-4 py-2 bg-gray-300 rounded"
+              class="px-4 py-2 rounded bg-main/20"
               id="decrement-btn"
             >
               -
             </button>
 
             <!-- Display Quantity -->
-            <span id="quantity-display" class="text-lg font-bold">1</span>
+            <span id="quantity-display" class="text-lg font-regular">1</span>
 
             <!-- Increment Button -->
             <button
               type="button"
-              class="px-4 py-2 bg-gray-300 rounded"
+              class="px-4 py-2 rounded bg-main/20"
               id="increment-btn"
             >
               +
             </button>
             <button
-              class="py-4 px-6 rounded-[30px] transition duration-200 bg-main uppercase text-white w-full text-base mt-10"
+              class="py-4 px-6 rounded-[30px] transition duration-200 bg-main uppercase text-white w-full text-base"
               type="submit"
             >
               {{ 'basic.cart' | t }}
@@ -123,9 +117,51 @@
       <h2 class="text-xl font-bold text-main">Descrizione</h2>
       <p class="text-lg font-light">{{ product.description }}</p>
     </div>
-    <p class="text-lg font-light">ciao</p>
-    <p class="text-lg font-light">ciaone</p>
+    <div class="flex flex-col gap-2">
+      <h2 class="text-xl font-bold text-main">Spedizioni</h2>
+      <p class="text-lg font-light">{{ product.description }}</p>
+    </div>
+    <div class="flex flex-col gap-2">
+      <div>
+        <h2 class="text-xl font-bold text-main">Composizione</h2>
+        <p class="text-lg font-light">{{ product.description }}</p>
+      </div>
+      <div>
+        <h2 class="text-xl font-bold text-main">Tracciabilità</h2>
+        <p class="text-lg font-light">{{ product.description }}</p>
+      </div>
+    </div>
   </div>
+</div>
+<div class="w-[90%] mx-auto">
+  {% if product.collections.size > 0 %}
+    <!-- Se il prodotto appartiene a una o più collezioni -->
+    {% assign current_collection = product.collections.first %}
+
+    <h3>Prodotti correlati</h3>
+    <div class="grid grid-cols-4">
+      {% for related_product in current_collection.products | limit: 5 %}
+        {% if related_product.id != product.id %}
+          <!-- Salta il prodotto corrente -->
+          <div class="related-product">
+            <a href="{{ related_product.url | within: current_collection }}">
+              <img
+                src="{{ related_product.featured_image | img_url: 'medium' }}"
+                width="300px"
+                height="300px"
+                alt="{{ related_product.title }}"
+              >
+              <p>{{ related_product.title }}</p>
+            </a>
+            <p>{{ related_product.price | money }}</p>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <!-- Se il prodotto non è in una collezione -->
+    <p>Nessun prodotto correlato disponibile.</p>
+  {% endif %}
 </div>
 
 <style>
